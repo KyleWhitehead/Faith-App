@@ -6,26 +6,7 @@ import './Home.css'
 function Home() {
   return (
        <div>
-      <div className='body'>
-        <div className='navbar'>
-        <div className='nav__links'>
-          <div className='nav__link'>
-            Home
-          </div>
-          <div className='nav__link'>
-            About
-          </div>
-          <div className='nav__link'>
-            Contact
-          </div>
-          <Link to="/translation" 
-          className='nav__link'
-          target='blank'>
-            Translations
-          </Link>
-        </div>
-      </div>
-        <div>
+       
       <h1>Bible App</h1>
       <section className='Description'>
         <h2>Welcome to the Bible App</h2>
@@ -62,7 +43,6 @@ function Home() {
         <p className='footer__para'>&copy; 2024 Bible App. All rights reserved.</p>
       </footer>
       </div>
-    </div>
   )
 }
 
