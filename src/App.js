@@ -6,7 +6,6 @@ import Contact from './Pages.jsx/Contact';
 import Translation from './Pages.jsx/Translation';
 function App() {
   return (
-   <div>
       <Router>
         <nav>
           <Link to="/">Home</Link>
@@ -21,8 +20,6 @@ function App() {
           <Route path="/translation" element={<Translation />} />
         </Routes>
       </Router>
-
-   </div>
   );
 }
 
