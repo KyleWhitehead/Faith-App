@@ -25,6 +25,7 @@ function Home() {
           </Link>
         </div>
       </div>
+        <div>
       <h1>Bible App</h1>
       <section className='Description'>
         <h2>Welcome to the Bible App</h2>
