@@ -76,4 +76,25 @@
   font-size: 1.2rem;
 }
 
+/* Footer */
+footer {
+  display: flex;
+  padding: 1rem;
+  background-color: #821313;
+  width: 100%;
+}
+
+.icon__items {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  color: white;
+  background-color: #821313;
+}
+
+.footer__para {
+  margin-left: auto;
+  color: #fff;
+  background-color: #821313;
+}
 

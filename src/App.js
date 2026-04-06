@@ -1,14 +1,13 @@
 import './App.css';
 import React from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FontAwesomeComponent from './Components/FontAwesomeComponent';
-import Translation from './Components/Translation';
+import { BrowserRouter as Router, Link} from 'react-router-dom';
 
 function App() {
   return (
-    <div className='body'>
-      <div className='navbar'>
+    <Router>
+      <div className='body'>
+        <div className='navbar'>
         <div className='nav__links'>
           <div className='nav__link' onClick={() => {}}>
             Home
@@ -19,9 +18,11 @@ function App() {
           <div className='nav__link' onClick={() => {}}>
             Contact
           </div>
-          <div className='nav__link' onClick={() => {}}>
+          <Link to="/translations" 
+          className='nav__link'
+          target='blank'>
             Translations
-          </div>
+          </Link>
         </div>
       </div>
       <h1>Bible App</h1>
@@ -43,7 +44,7 @@ function App() {
         <ul className='features__list'>
           <li className='features__list--items'>Bible translations</li>
           <li className='features__list--items'>Bookmarking and notes</li>
-          <li className='features__list--items'>Audio Bible</li>
+          <li className='features__list--items'>Many languages</li>
         </ul>
           </div>
         </div>
@@ -57,9 +58,10 @@ function App() {
       </section>
       <footer>
         <FontAwesomeComponent />
-        <p>&copy; 2024 Bible App. All rights reserved.</p>
+        <p className='footer__para'>&copy; 2024 Bible App. All rights reserved.</p>
       </footer>
-    </div>
+      </div>
+    </Router>
   );
 }
 
