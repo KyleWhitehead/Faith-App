@@ -1,6 +1,5 @@
 import React from 'react'
 import FontAwesomeComponent from '../Components/FontAwesomeComponent';
-import { Link } from 'react-router-dom';
 import './Home.css'
 
 function Home() {
