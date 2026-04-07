@@ -1,20 +1,32 @@
-import React, { use } from 'react'
 import './Translation.css'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import React from 'react';
 
 //https://bible-api.com/data//
 
-const Translation = () => {
-  const { translation } = useParams();
+function Translation() {
+  const [data, setData] = useState([]);
+
+  async function main() {
+  const { data } = await axios.get("https://bible-api.com/data")
+  setData(data);
+  }
+
   useEffect(() => {
-    fetch(`https://bible-api.com/data/${translation}`)
-      .then(response => response.json())
+    main();
   }, []);
 
 
   return (
-    <h1>Translation</h1>
+    <div>
+      {data.length > 0 ? (
+        <h1>{data[0]?.name}</h1>
+      ) : (
+        <h1>Loading...</h1>
+      )}
+    </div>
   )
 }
 
