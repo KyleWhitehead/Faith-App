@@ -1,4 +1,34 @@
-* {
-    color: black;
-    background-color: #f0f0f0;
+.translation__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  width: 200px;
+}
+
+/* Responsive Design */
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+  .translation__card {
+    width: 100%;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .translation__card {
+    width: 45%;
+  }
+}
+
+/* Computer Screens */
+@media (min-width: 1024px) {
+  .translation__card {
+    width: 30%;
+  }
 }

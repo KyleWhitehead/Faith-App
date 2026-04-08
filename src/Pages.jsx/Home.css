@@ -7,14 +7,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 /* Description Section */
 
 .Description {
-  max-width: 800px;
+  max-width: 100%;
   text-align: center;
   margin: 2rem 0;
+
 }
 
 .description__para {
@@ -39,7 +41,7 @@
 /* Testomonials Section */
 
 .Testomonials {
-  max-width: 800px;
+  max-width: 100%;
   text-align: center;
   margin: 2rem 0;
 }
@@ -55,6 +57,8 @@ footer {
   padding: 1rem;
   background-color: #821313;
   width: 100%;
+  margin-top: auto;
+  justify-content: space-between;
 }
 
 .icon__items {
@@ -66,8 +70,43 @@ footer {
 }
 
 .footer__para {
-  margin-left: auto;
+  padding-right: 40px;
   color: #fff;
   background-color: #821313;
 }
 
+/* Small Screens */
+@media (max-width: 480px) {
+  .Features {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer__para {
+    margin: 1rem 0 0 0;
+  }
+}
+
+/* Large Screens */
+@media (min-width: 768px) {
+  .Features {
+    flex-direction: row;
+  }
+  .footer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .footer__para {
+    margin: 0;
+  }
+}
+
+/* Computer Screens */
+@media (min-width: 1024px) {
+  .Features {
+    flex-direction: row;
+  }
+}

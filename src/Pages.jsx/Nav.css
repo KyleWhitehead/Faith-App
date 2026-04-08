@@ -23,3 +23,27 @@
   text-decoration: underline;
   color:rgb(27, 73, 73)
 }
+
+/* Responsive Design */
+
+@media (max-width: 480px) {
+  .nav__links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .nav__links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Computer Screens */
+@media (min-width: 1024px) {
+  .nav__links {
+    flex-direction: row;
+  }
+}

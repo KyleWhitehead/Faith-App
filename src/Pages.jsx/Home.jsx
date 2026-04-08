@@ -5,7 +5,6 @@ import './Home.css'
 function Home() {
   return (
        <div>
-       
       <h1>Bible App</h1>
       <section className='Description'>
         <h2>Welcome to the Bible App</h2>
@@ -37,7 +36,7 @@ function Home() {
         <p className='testimonial__para'>"I love the variety of translations available." - Sarah K.</p>
         </div>
       </section>
-      <footer>
+      <footer className='footer'>
         <FontAwesomeComponent />
         <p className='footer__para'>&copy; 2024 Bible App. All rights reserved.</p>
       </footer>
