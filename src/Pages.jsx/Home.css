@@ -59,6 +59,9 @@ footer {
   margin-top: auto;
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+
 }
 
 .icon__items {

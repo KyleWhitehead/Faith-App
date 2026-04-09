@@ -3,9 +3,31 @@ import FontAwesomeComponent from '../Components/FontAwesomeComponent';
 import './Home.css'
 
 function Home() {
+//https://bible-api.com/BOOK+CHAPTER:VERSE//
+let currentResults = [];
+
+async function searchChange() {
+  const input = document.getElementById('home__input').value;
+  const q = (input?.value || "").trim();
+  const resultsEl = document.getElementById("results");
+  if (!resultsEl) return;
+  if (!q) {
+    currentResults = [];
+    resultsEl.innerHTML = "";
+    return;
+  }
+}
+
   return (
        <div>
       <h1>Bible App</h1>
+      <input id='home__input' type="text" placeholder='Search the Bible...' onchange="searchChange()" />
+      <button className='home__button' onclick="searchChange()">Get Started</button>
+      <select id="filter-select" onchange="filterChange()">
+        <option value="">All Translations</option>
+        <option value="az">A-Z</option>
+        <option value="za">Z-A</option>
+      </select>
       <section className='Description'>
         <h2>Welcome to the Bible App</h2>
         <p className='description__para'>
