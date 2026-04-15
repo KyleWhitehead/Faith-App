@@ -18,10 +18,10 @@ function Translation() {
   }, []);
 
   return (
-    <div>
+    <div className="translation">
       {data.length > 0 ? (
         data.map((item) => (
-          <div key={item.id} className="translation__card">
+          <div key={item.id} className="translation__card card">
             <h2>{item.name}</h2>
             <p>{item.language}</p>
             <p>{item.identifier}</p>

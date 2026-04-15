@@ -5,6 +5,7 @@ import About from './Pages.jsx/About';
 import Contact from './Pages.jsx/Contact';
 import Translation from './Pages.jsx/Translation';
 import Nav from './Pages.jsx/Nav';
+import Page from './Pages.jsx/Page';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/translation" element={<Translation />} />
+          <Route path="/page" element={<Page />} />
         </Routes>
       </Router>
   );

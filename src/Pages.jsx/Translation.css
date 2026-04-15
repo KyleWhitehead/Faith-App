@@ -1,6 +1,6 @@
 .translation__card {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: center;
   padding: 20px;
@@ -8,6 +8,20 @@
   border-radius: 8px;
   margin: 10px;
   width: 200px;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.translation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
 }
 
 /* Responsive Design */
