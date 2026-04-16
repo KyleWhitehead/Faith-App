@@ -19,7 +19,7 @@ const Home = () => {
 
     setLoading(true);
     try {
-      const url = `https://bible-api.com/${encodeURIComponent(q)}`;
+      const url = `https://bible-api.com/data${encodeURIComponent(q)}`;
       const res = await fetch(url);
       const data = await res.json();
       const verses = data.verses || [];
@@ -45,8 +45,6 @@ const Home = () => {
 
   return (
     <div>
-      <div className="verse__loading--skeleton"></div>
-      <div className="skeleton bible__verse--sekelton"></div>
       <h2>Bible App</h2>
       <input
         id="home__input"
@@ -54,16 +52,16 @@ const Home = () => {
         type="text"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        placeholder="Search for a verse (e.g., John 3:16)"
+        placeholder="Search for a verse (e.g., John 3:16, JHN 3:16, John 3:16-18)"
         onKeyPress={(event) => event.key === "Enter" && searchChange()}
       />
       <button className="home__button" onClick={searchChange}>
-        Search Translations
+        Search
       </button>
       <select id="filter-select">
-        <option value="">All Translations</option>
-        <option value="az">A-Z</option>
-        <option value="za">Z-A</option>
+        <option value="book">Book</option>
+        <option value="chapter">Chapter</option>
+        <option value="verse">Verse</option>
       </select>
 
       <section id="results" className="results">
