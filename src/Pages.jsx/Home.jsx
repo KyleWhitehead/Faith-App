@@ -54,11 +54,11 @@ const Home = () => {
       const sortedResults = [...prevResults];
 
       if (selectedFilter === "chapter") {
-        return sortedResults.sort((a, b) => a.chapter - b.chapter);
+        return sortedResults.slice().sort((a, b) => a.chapter - b.chapter);
       }
 
       if (selectedFilter === "verse") {
-        return sortedResults.sort((a, b) => a.verse - b.verse);
+        return sortedResults.slice().sort((a, b) => a.verse - b.verse);
       }
 
       return sortedResults;
