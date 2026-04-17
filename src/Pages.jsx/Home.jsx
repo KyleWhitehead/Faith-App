@@ -7,6 +7,7 @@ const Home = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState("chapter");
 
   async function searchChange() {
     const q = query.trim();
@@ -19,7 +20,7 @@ const Home = () => {
 
     setLoading(true);
     try {
-      const url = `https://bible-api.com/data${encodeURIComponent(q)}`;
+      const url = `https://bible-api.com/${encodeURIComponent(q)}`;
       const res = await fetch(url);
       const data = await res.json();
       const verses = data.verses || [];
@@ -33,6 +34,8 @@ const Home = () => {
         verses.map((verse) => ({
           text: verse.text,
           reference: `${verse.book_name} ${verse.chapter}:${verse.verse}`,
+          chapter: verse.chapter,
+          verse: verse.verse,
         })),
       );
     } catch (fetchError) {
@@ -41,6 +44,25 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleFilterChange(event) {
+    const selectedFilter = event.target.value;
+    setFilter(selectedFilter);
+
+    setResults((prevResults) => {
+      const sortedResults = [...prevResults];
+
+      if (selectedFilter === "chapter") {
+        return sortedResults.sort((a, b) => a.chapter - b.chapter);
+      }
+
+      if (selectedFilter === "verse") {
+        return sortedResults.sort((a, b) => a.verse - b.verse);
+      }
+
+      return sortedResults;
+    });
   }
 
   return (
@@ -58,8 +80,7 @@ const Home = () => {
       <button className="home__button" onClick={searchChange}>
         Search
       </button>
-      <select id="filter-select">
-        <option value="book">Book</option>
+      <select id="filter-select" value={filter} onChange={handleFilterChange}>
         <option value="chapter">Chapter</option>
         <option value="verse">Verse</option>
       </select>
