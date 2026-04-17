@@ -54,11 +54,11 @@ const Home = () => {
       const sortedResults = [...prevResults];
 
       if (selectedFilter === "chapter") {
-        return sortedResults.slice().sort((a, b) => a.chapter - b.chapter);
+        return sortedResults.slice().sort((a, b) => a.chapter - b.chapter || b.chapter - a.chapter);
       }
 
       if (selectedFilter === "verse") {
-        return sortedResults.slice().sort((a, b) => a.verse - b.verse);
+        return sortedResults.slice().sort((a, b) => a.verse - b.verse || b.verse - a.verse);
       }
 
       return sortedResults;
@@ -93,7 +93,7 @@ const Home = () => {
             {results.map((result, index) => (
               <li key={index} className="results__item">
                 <strong>{result.reference}</strong>
-                <p>{result.text}</p>
+                <p className="results__para">{result.text}</p>
               </li>
             ))}
           </ul>
