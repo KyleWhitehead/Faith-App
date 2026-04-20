@@ -23,7 +23,7 @@ const Home = () => {
       const url = `https://bible-api.com/${encodeURIComponent(q)}`;
       const res = await fetch(url);
       const data = await res.json();
-      const verses = data.verses || [];
+      const verses = (data.verses || []).slice(0, 10); // Limit to 10 results
 
       if (!verses.length) {
         setError("No verses found for that search term.");
@@ -91,7 +91,7 @@ const Home = () => {
         {results.length > 0 && (
           <ul className="results__list">
             {results.map((result, index) => (
-              <li key={index} className="results__item">
+              <li key={index} className="results__item card">
                 <strong>{result.reference}</strong>
                 <p className="results__para">{result.text}</p>
               </li>
