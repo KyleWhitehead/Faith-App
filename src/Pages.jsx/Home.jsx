@@ -8,6 +8,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("chapter");
+  const [sortOrder, setSortOrder] = useState("ascending");
 
   async function searchChange() {
     const q = query.trim();
@@ -46,23 +47,32 @@ const Home = () => {
     }
   }
 
+  function applySorting(resultsToSort, filterType, order) {
+    const sorted = [...resultsToSort];
+
+    if (filterType === "chapter") {
+      sorted.sort((a, b) => a.chapter - b.chapter);
+    } else if (filterType === "verse") {
+      sorted.sort((a, b) => a.verse - b.verse);
+    }
+
+    if (order === "descending") {
+      sorted.reverse();
+    }
+
+    return sorted;
+  }
+
   function handleFilterChange(event) {
     const selectedFilter = event.target.value;
     setFilter(selectedFilter);
+    setResults((prevResults) => applySorting(prevResults, selectedFilter, sortOrder));
+  }
 
-    setResults((prevResults) => {
-      const sortedResults = [...prevResults];
-
-      if (selectedFilter === "chapter") {
-        return sortedResults.slice().sort((a, b) => a.chapter - b.chapter || b.chapter - a.chapter);
-      }
-
-      if (selectedFilter === "verse") {
-        return sortedResults.slice().sort((a, b) => a.verse - b.verse || b.verse - a.verse);
-      }
-
-      return sortedResults;
-    });
+  function handleSortOrderChange(event) {
+    const selectedOrder = event.target.value;
+    setSortOrder(selectedOrder);
+    setResults((prevResults) => applySorting(prevResults, filter, selectedOrder));
   }
 
   return (
@@ -80,9 +90,14 @@ const Home = () => {
       <button className="home__button" onClick={searchChange}>
         Search
       </button>
+
       <select id="filter-select" value={filter} onChange={handleFilterChange}>
-        <option value="chapter">Chapter</option>
-        <option value="verse">Verse</option>
+        <option value="chapter">Sort by Chapter</option>
+        <option value="verse">Sort by Verse</option>
+      </select>
+      <select id="sort-order-select" value={sortOrder} onChange={handleSortOrderChange}>
+        <option value="ascending">Ascending</option>
+        <option value="descending">Descending</option>
       </select>
 
       <section id="results" className="results">
