@@ -4,87 +4,77 @@ import "./Home.css";
 
 const Home = () => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [filter, setFilter] = useState("a-z");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [filter, setFilter] = useState("chapter");
-  const [sortOrder, setSortOrder] = useState("ascending");
+  const [error, setError] = useState(null);
+  const [results, setResults] = useState([]);
 
-  async function searchChange() {
+  const searchChange = async () => {
     const q = query.trim();
-    setError("");
-    setResults([]);
-
     if (!q) {
+      setResults([]);
       return;
     }
-
+    
     setLoading(true);
+    setError(null);
     try {
-      const url = `https://bible-api.com/${encodeURIComponent(q)}`;
+      const url = `https://www.omdbapi.com/?apikey=67c5f77b&s=${encodeURIComponent(q)}`;
       const res = await fetch(url);
       const data = await res.json();
-      const verses = (data.verses || []).slice(0, 10); // Limit to 10 results
-
-      if (!verses.length) {
-        setError("No verses found for that search term.");
-        return;
+      
+      if (data.Response === "True") {
+        const list = data.Search || [];
+        const movies = list.map((r) => ({
+          id: r.imdbID,
+          title: r.Title,
+          year: r.Year ? parseInt(r.Year, 10) : "",
+          poster: r.Poster && r.Poster !== "N/A" ? r.Poster : "",
+        }));
+        applyFilter(movies, filter);
+      } else {
+        setResults([]);
+        setError(data.Error || "No results found.");
       }
-
-      setResults(
-        verses.map((verse) => ({
-          text: verse.text,
-          reference: `${verse.book_name} ${verse.chapter}:${verse.verse}`,
-          chapter: verse.chapter,
-          verse: verse.verse,
-        })),
-      );
-    } catch (fetchError) {
-      console.error("Error fetching Bible verses:", fetchError);
-      setError("Error fetching verses. Please try again.");
+    } catch (e) {
+      setError("Something went wrong. Please try again.");
+      setResults([]);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  function applySorting(resultsToSort, filterType, order) {
-    const sorted = [...resultsToSort];
-
-    if (filterType === "chapter") {
-      sorted.sort((a, b) => a.chapter - b.chapter);
-    } else if (filterType === "verse") {
-      sorted.sort((a, b) => a.verse - b.verse);
+  const applyFilter = (movies, filterMode) => {
+    let sorted = [...movies];
+    if (filterMode === "a-z") {
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (filterMode === "z-a") {
+      sorted.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (filterMode === "newest") {
+      sorted.sort((a, b) => (parseInt(b.year || 0, 10)) - (parseInt(a.year || 0, 10)));
+    } else if (filterMode === "oldest") {
+      sorted.sort((a, b) => (parseInt(a.year || 0, 10)) - (parseInt(b.year || 0, 10)));
     }
+    setResults(sorted);
+  };
 
-    if (order === "descending") {
-      sorted.reverse();
-    }
+  const handleFilterChange = (e) => {
+    const newFilter = e.target.value;
+    setFilter(newFilter);
+    applyFilter(results, newFilter);
+  };
 
-    return sorted;
-  }
-
-  function handleFilterChange(event) {
-    const selectedFilter = event.target.value;
-    setFilter(selectedFilter);
-    setResults((prevResults) => applySorting(prevResults, selectedFilter, sortOrder));
-  }
-
-  function handleSortOrderChange(event) {
-    const selectedOrder = event.target.value;
-    setSortOrder(selectedOrder);
-    setResults((prevResults) => applySorting(prevResults, filter, selectedOrder));
-  }
 
   return (
     <div>
-      <h2>Bible App</h2>
+      <h2>Movie App</h2>
       <input
         id="home__input"
         className="home__input"
         type="text"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        placeholder="Search for a verse (e.g., John 3:16, JHN 3:16, John 3:16-18)"
+        placeholder="Search for a movie (e.g., 'Inception')"
         onKeyPress={(event) => event.key === "Enter" && searchChange()}
       />
       <button className="home__button" onClick={searchChange}>
@@ -92,13 +82,12 @@ const Home = () => {
       </button>
 
       <select id="filter-select" value={filter} onChange={handleFilterChange}>
-        <option value="chapter">Sort by Chapter</option>
-        <option value="verse">Sort by Verse</option>
+        <option value="a-z">Sort A-Z</option>
+        <option value="z-a">Sort Z-A</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
       </select>
-      <select id="sort-order-select" value={sortOrder} onChange={handleSortOrderChange}>
-        <option value="ascending">Ascending</option>
-        <option value="descending">Descending</option>
-      </select>
+      
 
       <section id="results" className="results">
         {loading && <p>Loading...</p>}
@@ -116,10 +105,9 @@ const Home = () => {
       </section>
 
       <section className="Description">
-        <h2>Welcome to the Bible App</h2>
+        <h2>Welcome to the Movie App</h2>
         <p className="description__para">
-          This app provides access to the Bible in various translations and
-          languages. You can read, search, and explore the scriptures with ease.
+          This app provides access to a vast collection of movies and TV shows. You can search, browse, and discover your next favorite entertainment.
         </p>
         <p className="description__para">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
@@ -131,9 +119,9 @@ const Home = () => {
           <div>
             <h2>Features</h2>
             <ul className="features__list">
-              <li className="features__list--items">Bible translations</li>
-              <li className="features__list--items">Bookmarking and notes</li>
-              <li className="features__list--items">Many languages</li>
+              <li className="features__list--items">Movie database</li>
+              <li className="features__list--items">Search and filtering</li>
+              <li className="features__list--items">User reviews and ratings</li>
             </ul>
           </div>
         </div>
@@ -142,17 +130,17 @@ const Home = () => {
         <div className="Testimonials">
           <h2>Testimonials</h2>
           <p className="testimonial__para">
-            "This app has transformed my Bible study experience!" - John D.
+            "This app has transformed my movie-watching experience!" - John D.
           </p>
           <p className="testimonial__para">
-            "I love the variety of translations available." - Sarah K.
+            "I love the variety of movies available." - Sarah K.
           </p>
         </div>
       </section>
       <footer className="footer">
         <FontAwesomeComponent />
         <p className="footer__para">
-          &copy; 2024 Bible App. All rights reserved.
+          &copy; 2024 Movie App. All rights reserved.
         </p>
       </footer>
     </div>
