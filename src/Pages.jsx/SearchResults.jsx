@@ -89,7 +89,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     applyFilter(results, filter);
-  }, [filter]);
+  }, [filter, results]);
 
   const applyFilter = (movies, filterMode) => {
     let sorted = [...movies];
