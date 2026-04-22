@@ -6,11 +6,11 @@ import "./Home.css";
 const Home = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("a-z");
-  const [loading, setLoading] = useState(false);
+  const [filter] = useState("a-z");
+  const [, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [results, setResults] = useState([]);
-
+  const [, setResults] = useState([]);
+  
   const searchChange = async () => {
     const q = query.trim();
     if (!q) {
