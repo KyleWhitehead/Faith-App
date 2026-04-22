@@ -2,6 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./SearchResults.css";
 
+function renderResults(list) {
+  if (!list.length) {
+    return (
+      <div className="status">No results found.</div>
+    );
+  }
+  
+  return (
+    <div className="results-grid">
+      {list.map((m) => (
+        <div key={m.id} className="movie">
+          <div className="movie__poster">
+            <img src={m.poster} alt={m.title} loading="lazy" />
+          </div>
+          <div className="movie__meta">
+            <div className="movie__title">{m.title}</div>
+            <div className="movie__year">{m.year || ""}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 const SearchResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,27 +76,7 @@ const SearchResults = () => {
         </select>
       </div>
 
-      {results.length === 0 ? (
-        <p className="no-results">No movies found. Try a different search.</p>
-      ) : (
-        <div className="results-grid">
-          {results.map((result) => (
-            <div key={result.id} className="result-card">
-              <div className="result-poster">
-                {result.poster ? (
-                  <img src={result.poster} alt={result.title} loading="lazy" />
-                ) : (
-                  <div className="no-poster">No Image</div>
-                )}
-              </div>
-              <div className="result-info">
-                <h3>{result.title}</h3>
-                <p className="result-year">{result.year || "N/A"}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      {renderResults(results)}
     </div>
   );
 };
