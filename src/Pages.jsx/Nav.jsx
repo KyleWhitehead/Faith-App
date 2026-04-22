@@ -17,9 +17,6 @@ function Nav() {
             <Link to="/contact" className="nav__link">
               Contact
             </Link>
-            <Link to="/translation" className="nav__link" target="blank">
-              Translations
-            </Link>
           </div>
         </div>
       </div>

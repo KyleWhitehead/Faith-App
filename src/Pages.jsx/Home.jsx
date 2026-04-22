@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FontAwesomeComponent from "../Components/FontAwesomeComponent";
 import "./Home.css";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("a-z");
   const [loading, setLoading] = useState(false);
@@ -31,9 +33,10 @@ const Home = () => {
           year: r.Year ? parseInt(r.Year, 10) : "",
           poster: r.Poster && r.Poster !== "N/A" ? r.Poster : "",
         }));
-        applyFilter(movies, filter);
+        const sortedMovies = applyFilter(movies, filter);
+        // Navigate to SearchResults page with results
+        navigate("/search-results", { state: { query: q, results: sortedMovies } });
       } else {
-        setResults([]);
         setError(data.Error || "No results found.");
       }
     } catch (e) {
@@ -56,13 +59,9 @@ const Home = () => {
       sorted.sort((a, b) => (parseInt(a.year || 0, 10)) - (parseInt(b.year || 0, 10)));
     }
     setResults(sorted);
+    return sorted;
   };
 
-  const handleFilterChange = (e) => {
-    const newFilter = e.target.value;
-    setFilter(newFilter);
-    applyFilter(results, newFilter);
-  };
 
 
   return (
@@ -81,28 +80,7 @@ const Home = () => {
         Search
       </button>
 
-      <select id="filter-select" value={filter} onChange={handleFilterChange}>
-        <option value="a-z">Sort A-Z</option>
-        <option value="z-a">Sort Z-A</option>
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-      </select>
-      
-
-      <section id="results" className="results">
-        {loading && <p>Loading...</p>}
-        {error && <p className="error">{error}</p>}
-        {results.length > 0 && (
-          <ul className="results__list">
-            {results.map((result, index) => (
-              <li key={index} className="results__item card">
-                <strong>{result.reference}</strong>
-                <p className="results__para">{result.text}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+      {error && <p className="error">{error}</p>}
 
       <section className="Description">
         <h2>Welcome to the Movie App</h2>
